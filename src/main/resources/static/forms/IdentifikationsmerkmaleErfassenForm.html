@@ -1,0 +1,118 @@
+<!--
+Formular für den Schritt 'Identifikationsmerkmale erfassen'
+-->
+<div class="alert alert-info">      
+    <p>Erfassen Sie Ihre Daten, wie diese in einem amtlichen Dokument, Ihrer Meldebestätigung 
+        oder Ihrem Schriftenempfangsschein aufgeführt sind.</p>
+    <p>Falls Sie mehrere Vornamen haben oder einen Doppelnamen führen, müssen Sie alle Namen aufführen.</p>
+    <p>* Diese Felder müssen ausgefüllt werden.</p>
+</div>
+
+
+<form class="form-horizontal">
+    <!-- PERSONALIEN -->
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Personalien</b></div>
+        <div class="panel-body">
+            <div class="form-group row">
+                <div class="col-xs-4">
+                    <label>
+                        Vornamen*
+                    </label>
+                    <input 
+                        class="form-control"
+                        name="firstName"
+                        cam-variable-type="String"
+                        cam-variable-name="firstName"
+                        type="text"
+                        required
+                        maxlength="100"
+                        placeholder="Max Emilian">
+                    <p class="help-block">Geben Sie Ihre Vornamen ein, wie Sie auf Ihrem amtlichen Ausweis abgebildet sind.</p>
+                </div>
+                <div class="col-xs-4">
+                    <label>
+                        Nachname*
+                    </label>
+                    <input class="form-control" name="officialName" cam-variable-type="String" cam-variable-name="officialName" type="text" required maxlength="100" placeholder="Muster">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-xs-4">
+                    <label>
+                        AHV-Nummer
+                    </label>
+                    <input class="form-control" name="vn" cam-variable-type="Long" cam-variable-name="vn" type="text" min="7560000000001" max="7569999999999" placeholder="756**********">
+                </div>
+
+                <div class="col-xs-4">
+                    <label>
+                        Geschlecht*
+                    </label>
+                    <select class="form-control" cam-variable-type="String" cam-variable-name="sex" required>
+                        <option></option>
+                        <option value="1">Männlich</option>
+                        <option value="2">Weiblich</option>
+                        <option value="3">Unbekant</option>
+                    </select>
+                </div>
+
+                <div class="col-xs-4">
+                    <label>
+                        Geburtsdatum*
+                    </label>
+                    <p class="input-group">
+                        <input type="text"
+                               cam-variable-name="dateOfBirth"
+                               cam-variable-type="Date"
+                               class="form-control"
+                               datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
+                               is-open="dateFieldOpeneddateOfBirth"
+                               placeholder="Datumswahl -->"
+                               required/>
+
+                        <span class="input-group-btn">
+                            <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="opendateOfBirth($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </p>
+                    <script cam-script type="text/form-script">
+                        $scope.opendateOfBirth = function($event) {
+                        $event.preventDefault();
+                        $event.stopPropagation();
+
+                        $scope.dateFieldOpeneddateOfBirth = true;
+                        };
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IHR JETZIGER WOHNORT -->
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Ihr jetziger Wohnort</b></div>
+        <div class="panel-body">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label>
+                        Politische Gemeinde*
+                    </label>
+                    <select class="form-control" cam-variable-type="String" cam-variable-name="municipalityMoveOut">
+                        <option value="bern">Bern</option><option value="thun">Thun</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script cam-script type="text/form-script">
+        // custom JavaScript goes here
+    </script>
+</form>

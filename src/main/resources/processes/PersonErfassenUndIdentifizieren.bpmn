@@ -172,7 +172,7 @@ In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Wegen ne
       <bpmn:incoming>SequenceFlow_0xvndsx</bpmn:incoming>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_14fbx4x" errorRef="Error_0j8yidj" />
     </bpmn:endEvent>
-    <bpmn:userTask id="IdentifikationsmerkmaleErfassen" name="Identifikationsmerkmale erfassen" camunda:assignee="${meldePflichtiger}">
+    <bpmn:userTask id="IdentifikationsmerkmaleErfassen" name="Identifikationsmerkmale erfassen" camunda:formKey="embedded:app:forms/IdentifikationsmerkmaleErfassenForm.html" camunda:assignee="${meldePflichtiger}">
       <bpmn:documentation>Für dieses und alle weiteren Formulare gilt: Es wird eine client-seitige Validierung erwartet, welche den Benutzer informiert, was er falsch gemacht hat (Ausnahme: maxlength und required können ohne Validierungsnachricht gelöst werden.)
 
 AHV-Nummer (optional)
