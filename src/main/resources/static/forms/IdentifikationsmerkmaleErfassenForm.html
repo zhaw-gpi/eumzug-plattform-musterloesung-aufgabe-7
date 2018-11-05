@@ -9,7 +9,7 @@ Formular für den Schritt 'Identifikationsmerkmale erfassen'
 </div>
 
 
-<form class="form-horizontal">
+<form role="form" class="form-horizontal" name="camundaForm">
     <!-- PERSONALIEN -->
     <div class="panel panel-default">
         <div class="panel-heading"><b>Personalien</b></div>
@@ -42,18 +42,21 @@ Formular für den Schritt 'Identifikationsmerkmale erfassen'
                     <label>
                         AHV-Nummer
                     </label>
-                    <input class="form-control" name="vn" cam-variable-type="Long" cam-variable-name="vn" type="text" min="7560000000001" max="7569999999999" placeholder="756**********">
+                    <input class="form-control" name="vn" cam-variable-type="Long" cam-variable-name="vn" type="number" min="7560000000001" max="7569999999999" placeholder="756**********" required>
+                    <p class="help-block" ng-show="camundaForm.vn.$invalid && camundaForm.vn.$dirty">
+                        Geben Sie entweder keine AHV-Nummer ein oder eine im Bereich von 7560000000001 bis 7569999999999. Sie finden die Nummer auf Ihrer Krankenversicherungskarte.
+                    </p>
                 </div>
 
                 <div class="col-xs-4">
                     <label>
                         Geschlecht*
                     </label>
-                    <select class="form-control" cam-variable-type="String" cam-variable-name="sex" required>
+                    <select class="form-control" cam-variable-type="Integer" cam-variable-name="sex" required>
                         <option></option>
-                        <option value="1">Männlich</option>
-                        <option value="2">Weiblich</option>
-                        <option value="3">Unbekant</option>
+                        <option value=1>Männlich</option>
+                        <option value=2>Weiblich</option>
+                        <option value=3>Unbekant</option>
                     </select>
                 </div>
 
@@ -63,6 +66,7 @@ Formular für den Schritt 'Identifikationsmerkmale erfassen'
                     </label>
                     <p class="input-group">
                         <input type="text"
+                               name="dateOfBirth"
                                cam-variable-name="dateOfBirth"
                                cam-variable-type="Date"
                                class="form-control"
@@ -87,6 +91,7 @@ Formular für den Schritt 'Identifikationsmerkmale erfassen'
                         $scope.dateFieldOpeneddateOfBirth = true;
                         };
                     </script>
+                    <p class="help-block" ng-show="camundaForm.dateOfBirth.$error.date">Geben Sie das Datum im Format JJJJ-MM-DDT00:00:00 ein.</p>
                 </div>
             </div>
         </div>

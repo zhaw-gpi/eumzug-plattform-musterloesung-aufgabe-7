@@ -68,22 +68,15 @@ Wie genau eine Gemeinde mit der erhaltenen Meldung umgeht, ist je nach Gemeinde 
       <documentation>Zu Beginn der Modulabschlussarbeit sind in Output Parameter mehrere Variablen initial statisch gesetzt, damit der Prozess überhaupt durchlaufen kann. Diese werden mit der Zeit dynamisch gesetzt. Am Ende kann daher diese Aktivität gelöscht werden.</documentation>
       <extensionElements>
         <camunda:inputOutput>
-          <camunda:outputParameter name="personKnown">${true}</camunda:outputParameter>
+          <camunda:outputParameter name="personKnown">${false}</camunda:outputParameter>
           <camunda:outputParameter name="moveAllowed">${true}</camunda:outputParameter>
           <camunda:outputParameter name="adressMoveOutExists">${true}</camunda:outputParameter>
           <camunda:outputParameter name="wohnungenGefunden">${true}</camunda:outputParameter>
-          <camunda:outputParameter name="municipalityIdMoveOut">1</camunda:outputParameter>
-          <camunda:outputParameter name="municipalityIdMoveIn">2</camunda:outputParameter>
           <camunda:outputParameter name="checkBaseInsurance">${true}</camunda:outputParameter>
           <camunda:outputParameter name="checkBaseInsuranceResult">Yes</camunda:outputParameter>
-          <camunda:outputParameter name="documentsExist">${true}</camunda:outputParameter>
           <camunda:outputParameter name="allDataCorrect">${true}</camunda:outputParameter>
-          <camunda:outputParameter name="feeMap">dummy</camunda:outputParameter>
           <camunda:outputParameter name="relativesExist">${true}</camunda:outputParameter>
           <camunda:outputParameter name="relocationAccepted">${true}</camunda:outputParameter>
-          <camunda:outputParameter name="localPersonId">RutMül_1980-01-01_2</camunda:outputParameter>
-          <camunda:outputParameter name="firstName">Ruth</camunda:outputParameter>
-          <camunda:outputParameter name="officialName">Müller</camunda:outputParameter>
         </camunda:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_0ypg6cw</incoming>
@@ -152,8 +145,7 @@ Wie genau eine Gemeinde mit der erhaltenen Meldung umgeht, ist je nach Gemeinde 
 
 Die Personenidentifikations-Angaben sind bereits als Prozessvariablen vorhanden (localPersonId, vn, firstName, officialName, dateOfBirth und sex). 
 
-In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Erfolgreicher Abschluss des eUmzugsmeldung".
-</documentation>
+In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Erfolgreicher Abschluss des eUmzugsmeldung".</documentation>
       <extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="status">Erfolgreicher Abschluss des eUmzugsmeldung</camunda:inputParameter>
@@ -167,8 +159,7 @@ In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Erfolgre
 
 Die Personenidentifikations-Angaben sind bereits als Prozessvariablen vorhanden (localPersonId, vn, firstName, officialName, dateOfBirth und sex). 
 
-In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Fehlgeschlagen wegen Ablehnung einer Einwohnergemeinde".
-</documentation>
+In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Fehlgeschlagen wegen Ablehnung einer Einwohnergemeinde".</documentation>
       <extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="status">Fehlgeschlagen wegen Ablehnung einer Einwohnergemeinde</camunda:inputParameter>
@@ -182,8 +173,7 @@ In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Fehlgesc
 
 Die Personenidentifikations-Angaben sind bereits als Prozessvariablen vorhanden (localPersonId, vn, firstName, officialName, dateOfBirth und sex). 
 
-In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Fehlgeschlagen wegen Zeitüberschreitung bei der Kommunikation mit den Einwohnerkontrollsystemen".
-</documentation>
+In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Fehlgeschlagen wegen Zeitüberschreitung bei der Kommunikation mit den Einwohnerkontrollsystemen".</documentation>
       <extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="status">Fehlgeschlagen wegen Zeitüberschreitung bei der Kommunikation mit den Einwohnerkontrollsystemen</camunda:inputParameter>
