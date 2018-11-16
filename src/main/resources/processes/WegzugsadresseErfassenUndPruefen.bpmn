@@ -73,7 +73,7 @@ Die Response ist vom Typ AddresseExistenzType. Die darin enthaltene Eigenschaft 
       <bpmn:incoming>SequenceFlow_1n0ru7f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_04ncg2b</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="WegzugsadresseErfassen" name="Wegzugsadresse erfassen">
+    <bpmn:userTask id="WegzugsadresseErfassen" name="Wegzugsadresse erfassen" camunda:formKey="embedded:app:forms/WegzugsAdresseErfassenForm.html" camunda:assignee="${meldePflichtiger}">
       <bpmn:documentation>Wegzugsadresse Strasse
   eCH-0010:streetMoveOut (Achtung bei diesen und weiteren Attributen, die es sowohl bei Wegzug als auch Zuzug gibt: Es wurde an die eCH-Bezeichnung jeweils noch MoveOut angehängt)
   String
@@ -96,11 +96,10 @@ Wenn das Formular zum zweiten (oder dritten) Mal aufgerufen wird und die Adresse
 
 Die Variable adresseUngueltigZaehler wird dabei im ausgehenden Sequenzfluss nach dem Adresse gültig-Gateway in einem Listener um 1 erhöht.
 
-Bitte korrigieren Sie entweder Ihre Eingaben im nächsten Formular oder melden Sie sich bei Ihrer Wegzugsgemeinde [Name der politischen Gemeinde] am Schalter, wenn Sie der Meinung sind, eigentlich die korrekte Adresse erfasst zu haben. In diesem Fall können Sie einfach diese Webseite schliessen, denn Ihre elektronische Umzugsmeldung wird automatisch nach 48 Stunden archiviert."
-</bpmn:documentation>
+Bitte korrigieren Sie entweder Ihre Eingaben im nächsten Formular oder melden Sie sich bei Ihrer Wegzugsgemeinde [Name der politischen Gemeinde] am Schalter, wenn Sie der Meinung sind, eigentlich die korrekte Adresse erfasst zu haben. In diesem Fall können Sie einfach diese Webseite schliessen, denn Ihre elektronische Umzugsmeldung wird automatisch nach 48 Stunden archiviert."</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_0fooiee</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1n0ru7f</bpmn:outgoing>
-    </bpmn:task>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1o68a8d">
@@ -180,7 +179,7 @@ Bitte korrigieren Sie entweder Ihre Eingaben im nächsten Formular oder melden S
       <bpmndi:BPMNShape id="Task_1wp6ba1_di" bpmnElement="WegzugsadressePruefen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="432" y="212" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_1kpakc7_di" bpmnElement="WegzugsadresseErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+      <bpmndi:BPMNShape id="UserTask_0vukmvb_di" bpmnElement="WegzugsadresseErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="272" y="212" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

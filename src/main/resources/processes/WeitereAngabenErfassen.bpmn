@@ -136,18 +136,6 @@ In einem End Listener wird die Variable checkBaseInsurance auf false gesetzt. Be
       <bpmn:incoming>SequenceFlow_0431ehk</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1pmjdyn</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="KontaktangabenErfassen" name="Kontaktangaben erfassen">
-      <bpmn:documentation>Telefonnummer
-  eCH-0185:phoneNumber
-  String
-  input text (10-20 Ziffern, Pflicht)
-E-Mailadresse
-  eCH-0185:emailAddress
-  String
-  input email (Pflicht)</bpmn:documentation>
-      <bpmn:incoming>SequenceFlow_1pmjdyn</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1hy3e56</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_1hy3e56" sourceRef="KontaktangabenErfassen" targetRef="WeitereAngabenErfolgreichErfasst" />
     <bpmn:sequenceFlow id="SequenceFlow_1pmjdyn" sourceRef="ExclusiveGateway_0hwy0a5" targetRef="KontaktangabenErfassen" />
     <bpmn:sequenceFlow id="SequenceFlow_0431ehk" sourceRef="GrundversicherungFuerAllePersonenPruefen" targetRef="ExclusiveGateway_0hwy0a5" />
@@ -165,7 +153,19 @@ Zuzugsdatum
       <bpmn:incoming>SequenceFlow_1j0inpb</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_04fd0dv</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="WohnverhaeltnisErfassen" name="Wohnverhältnis erfassen">
+    <bpmn:startEvent id="ZuzugsInformationenErfolgreichGeprueft" name="Zuzugs-Informationen erfolgreich geprüft">
+      <bpmn:documentation>Dieses Prozesstartereignis wird aufgerufen vom Prozess 'Umzugsmeldung erfassen und bezahlen' und ist nicht gedacht, um unabhängig davon (z.B. aus der Tasklist) aufgerufen zu werden.</bpmn:documentation>
+      <bpmn:outgoing>SequenceFlow_1j0inpb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0nvmazi" name="Umzugsart?">
+      <bpmn:incoming>SequenceFlow_0gaq5kd</bpmn:incoming>
+      <bpmn:outgoing>WegzugZuzug</bpmn:outgoing>
+      <bpmn:outgoing>Umzug</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1j0inpb" sourceRef="ZuzugsInformationenErfolgreichGeprueft" targetRef="UmzugsdatenErfassen" />
+    <bpmn:sequenceFlow id="SequenceFlow_04fd0dv" sourceRef="UmzugsdatenErfassen" targetRef="WohnverhaeltnisErfassen" />
+    <bpmn:sequenceFlow id="SequenceFlow_0gaq5kd" sourceRef="WohnverhaeltnisErfassen" targetRef="ExclusiveGateway_0nvmazi" />
+    <bpmn:userTask id="WohnverhaeltnisErfassen" name="Wohnverhältnis erfassen" camunda:formKey="embedded:app:forms/WohnverhaeltnisErfassenForm.html" camunda:assignee="${meldePflichtiger}">
       <bpmn:documentation>Wohnverhältnis
   eCH-0185:housingSituationType
  Integer
@@ -196,19 +196,19 @@ Ort
   input text (max. 40 Zeichen, Pflicht)</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_04fd0dv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0gaq5kd</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:startEvent id="ZuzugsInformationenErfolgreichGeprueft" name="Zuzugs-Informationen erfolgreich geprüft">
-      <bpmn:documentation>Dieses Prozesstartereignis wird aufgerufen vom Prozess 'Umzugsmeldung erfassen und bezahlen' und ist nicht gedacht, um unabhängig davon (z.B. aus der Tasklist) aufgerufen zu werden.</bpmn:documentation>
-      <bpmn:outgoing>SequenceFlow_1j0inpb</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0nvmazi" name="Umzugsart?">
-      <bpmn:incoming>SequenceFlow_0gaq5kd</bpmn:incoming>
-      <bpmn:outgoing>WegzugZuzug</bpmn:outgoing>
-      <bpmn:outgoing>Umzug</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_1j0inpb" sourceRef="ZuzugsInformationenErfolgreichGeprueft" targetRef="UmzugsdatenErfassen" />
-    <bpmn:sequenceFlow id="SequenceFlow_04fd0dv" sourceRef="UmzugsdatenErfassen" targetRef="WohnverhaeltnisErfassen" />
-    <bpmn:sequenceFlow id="SequenceFlow_0gaq5kd" sourceRef="WohnverhaeltnisErfassen" targetRef="ExclusiveGateway_0nvmazi" />
+    </bpmn:userTask>
+    <bpmn:userTask id="KontaktangabenErfassen" name="Kontaktangaben erfassen" camunda:formKey="embedded:app:forms/KontaktangabenErfassenForm.html" camunda:assignee="${meldePflichtiger}">
+      <bpmn:documentation>Telefonnummer
+  eCH-0185:phoneNumber
+  String
+  input text (10-20 Ziffern, Pflicht)
+E-Mailadresse
+  eCH-0185:emailAddress
+  String
+  input email (Pflicht)</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_1pmjdyn</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1hy3e56</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1p945p5">
@@ -354,17 +354,11 @@ Ort
       <bpmndi:BPMNShape id="Task_09ibpuj_di" bpmnElement="UmzugsdatenErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="153" y="81" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_12yomkp_di" bpmnElement="WohnverhaeltnisErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
-        <dc:Bounds x="296" y="81" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_0owxwe5_di" bpmnElement="VersicherungsKartennummernErfassen" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
         <dc:Bounds x="732" y="76" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_16zaspe_di" bpmnElement="GrundversicherungPruefen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="965" y="76" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0vx5o8i_di" bpmnElement="KontaktangabenErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
-        <dc:Bounds x="1494" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_0x2bvq1_di" bpmnElement="GrundversicherungFuerAllePersonenPruefen" isExpanded="true">
         <dc:Bounds x="549" y="13" width="812" height="213" />
@@ -387,6 +381,12 @@ Ort
         <di:waypoint x="1361" y="120" />
         <di:waypoint x="1414" y="120" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1eho7qp_di" bpmnElement="WohnverhaeltnisErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+        <dc:Bounds x="296" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_13fd62b_di" bpmnElement="KontaktangabenErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+        <dc:Bounds x="1494" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
