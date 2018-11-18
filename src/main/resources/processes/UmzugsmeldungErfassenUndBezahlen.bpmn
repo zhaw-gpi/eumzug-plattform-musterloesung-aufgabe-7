@@ -136,30 +136,6 @@ Theoretisch: Dem Prozess wird der BusinessKey, die BusinessCaseId und der Benutz
         <bpmn:outgoing>AngabenKorrigieren</bpmn:outgoing>
         <bpmn:outgoing>Abbrechen</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:task id="AlleAngabenPruefen" name="Alle Angaben prüfen">
-        <bpmn:documentation>Alle vom Meldepflichtigen gemachten Angaben werden dargestellt. Die Angaben werden in folgenden Panels gruppiert:
-
-- Gebühren (sofern das Total grösser als 0 Franken beträgt). Ausgabe als Tabelle mit Gebührentyp und Gebührenhöhe
-- Personalien
-- Mitumziehende Personen (nur Vornamen)
-- Dokumente (wenn grundsätzlich überhaupt Dokumente hätten hochgeladen werden können):
-  - Ausgabe als Tabelle
-  - Spalte 1 enthält Vorname der Person (z.B. Hans)
-  - Spalte 2 enthält Name des Dokuments (z.B. Heiratsurkunde)
-  - Spalte 3 enthält entweder "Kein Dokument hochgeladen" oder der Dateiname der hochgeladenen Datei mit einem Download-Link
-- Kontaktangaben
-- Wegzugsinformationen
-- Zuzugsinformationen
-- Wohnverhältnis-Informationen
-
-Zuunterst zwei Checkboxes:
-
-- Checkbox "Alle Angaben sind korrekt" (allDataCorrect), default-mässig angehakt. Ist sie nicht angehakt, soll ein Info-Alert angezeigt werden: "Sie werden zurück zum ersten Formular geführt, womit Sie in jedem Formular Ihre Angaben nochmals korrigieren können. Bestehende Eingaben bleiben erhalten."
-
-- Checkbox "Ich akzeptiere, die Gebühr von Fr. {{total}}.- zu bezahlen" (feesAccepted) -&gt; default-mässig angehakt. Ist sie nicht angehakt, soll ein Danger-Alert angezeigt werden: "Sind Sie sicher? Hierdurch werden alle Ihre Angaben aus Gründen der Nachvollziehbarkeit in der Umzugsplattform-Datenbank gespeichert, aber nicht an die Weg- und Zuzugsgemeinden weiter geleitet. Das heisst, Sie müssen in jedem Fall den Umzug persönlich am Schalter der Weg- und Zuzugsgemeinde melden."</bpmn:documentation>
-        <bpmn:incoming>SequenceFlow_12mko98</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_15e28af</bpmn:outgoing>
-      </bpmn:task>
       <bpmn:endEvent id="AngabenErfolgreichGeprueft" name="Angaben erfolgreich geprüft">
         <bpmn:incoming>Weiter</bpmn:incoming>
       </bpmn:endEvent>
@@ -190,8 +166,7 @@ Zuunterst zwei Checkboxes:
         <bpmn:documentation>Aufruf der JavaDelegate-implementierenden Klasse 'PersistUserEntriesAndStatusDelegate', um Personenidentifikations- und Status-Angaben zu persistieren. Erstere sollen nur gespeichert werden, wenn die entsprechende Person nicht bereits in der Datenbank existiert. Letztere sollen in der TransactionLog-Entität gespeichert werden.
 
 Die Personenidentifikations-Angaben sind bereits als Prozessvariablen vorhanden (localPersonId, vn, firstName, officialName, dateOfBirth und sex). 
-In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Fehlgeschlagen wegen nicht akzeptierter Gebühren".
-</bpmn:documentation>
+In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Fehlgeschlagen wegen nicht akzeptierter Gebühren".</bpmn:documentation>
         <bpmn:extensionElements>
           <camunda:inputOutput>
             <camunda:inputParameter name="status">Fehlgeschlagen wegen nicht akzeptierter Gebühren</camunda:inputParameter>
@@ -211,6 +186,30 @@ Zudem wird die Prozessvariable feesTotal auf den Wert der Gebühren insgesamt ge
         <bpmn:incoming>SequenceFlow_05prxas</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_12mko98</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:userTask id="AlleAngabenPruefen" name="Alle Angaben prüfen" camunda:formKey="embedded:app:forms/AlleAngabenPruefenForm.html" camunda:assignee="${meldePflichtiger}">
+        <bpmn:documentation>Alle vom Meldepflichtigen gemachten Angaben werden dargestellt. Die Angaben werden in folgenden Panels gruppiert:
+
+- Gebühren (sofern das Total grösser als 0 Franken beträgt). Ausgabe als Tabelle mit Gebührentyp und Gebührenhöhe
+- Personalien
+- Mitumziehende Personen (nur Vornamen)
+- Dokumente (wenn grundsätzlich überhaupt Dokumente hätten hochgeladen werden können):
+  - Ausgabe als Tabelle
+  - Spalte 1 enthält Vorname der Person (z.B. Hans)
+  - Spalte 2 enthält Name des Dokuments (z.B. Heiratsurkunde)
+  - Spalte 3 enthält entweder "Kein Dokument hochgeladen" oder der Dateiname der hochgeladenen Datei mit einem Download-Link
+- Kontaktangaben
+- Wegzugsinformationen
+- Zuzugsinformationen
+- Wohnverhältnis-Informationen
+
+Zuunterst zwei Checkboxes:
+
+- Checkbox "Alle Angaben sind korrekt" (allDataCorrect), default-mässig angehakt. Ist sie nicht angehakt, soll ein Info-Alert angezeigt werden: "Sie werden zurück zum ersten Formular geführt, womit Sie in jedem Formular Ihre Angaben nochmals korrigieren können. Bestehende Eingaben bleiben erhalten."
+
+- Checkbox "Ich akzeptiere, die Gebühr von Fr. {{total}}.- zu bezahlen" (feesAccepted) -&gt; default-mässig angehakt. Ist sie nicht angehakt, soll ein Danger-Alert angezeigt werden: "Sind Sie sicher? Hierdurch werden alle Ihre Angaben aus Gründen der Nachvollziehbarkeit in der Umzugsplattform-Datenbank gespeichert, aber nicht an die Weg- und Zuzugsgemeinden weiter geleitet. Das heisst, Sie müssen in jedem Fall den Umzug persönlich am Schalter der Weg- und Zuzugsgemeinde melden."</bpmn:documentation>
+        <bpmn:incoming>SequenceFlow_12mko98</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_15e28af</bpmn:outgoing>
+      </bpmn:userTask>
     </bpmn:subProcess>
     <bpmn:boundaryEvent id="AchtundvierzigStundenVerstrichen" name="48 h&#10;verstrichen" attachedToRef="UmzugsmeldungErfassen">
       <bpmn:documentation>Es soll vermieden werden, dass Prozessinstanzen ewig hängen bleiben, weil ein Meldepflichtiger zwar Formulare aufruft, aber eines dieser Formulare nie absendet, sondern z.B. den Browser vorher schliesst. Daher ein Timeout von 48 h (PT48H).
@@ -327,8 +326,7 @@ Der Prozess soll allerdings anschliessend ganz normal weiter gehen, wie wenn er 
 
 Die Personenidentifikations-Angaben sind bereits als Prozessvariablen vorhanden (localPersonId, vn, firstName, officialName, dateOfBirth und sex), ebenfalls der Status (status).
 
-In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Wegen Zeitüberschreitung abgebrochen".
-</bpmn:documentation>
+In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Wegen Zeitüberschreitung abgebrochen".</bpmn:documentation>
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="status">Wegen Zeitüberschreitung abgebrochen</camunda:inputParameter>
@@ -342,8 +340,7 @@ In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Wegen Ze
 
 Die Personenidentifikations-Angaben sind bereits als Prozessvariablen vorhanden (localPersonId, vn, firstName, officialName, dateOfBirth und sex), ebenfalls der Status (status).
 
-In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Erfolgreiche Erfassung der Umzugsmeldung".
-</bpmn:documentation>
+In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Erfolgreiche Erfassung der Umzugsmeldung".</bpmn:documentation>
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="status">Wegen fehlgeschlagener Zahlung abgebrochen</camunda:inputParameter>
@@ -521,9 +518,6 @@ In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Erfolgre
       <bpmndi:BPMNShape id="Task_19ebow6_di" bpmnElement="ErfolgreicheUmzugsmeldungErfasungMitteilen" bioc:stroke="#8E24AA" bioc:fill="#E1BEE7">
         <dc:Bounds x="1777" y="184" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_1olfbrh_di" bpmnElement="AlleAngabenPruefen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
-        <dc:Bounds x="715" y="194" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_0ph24x6_di" bpmnElement="UmzugsmeldungErfassen" isExpanded="true">
         <dc:Bounds x="161" y="23" width="1007" height="398" />
       </bpmndi:BPMNShape>
@@ -666,6 +660,9 @@ In einem Input-Parameter wird die Prozessvariable 'status' gesetzt mit "Erfolgre
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_04bqahc_di" bpmnElement="GebuehrenErmitteln" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="565" y="194" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1okj1pk_di" bpmnElement="AlleAngabenPruefen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+        <dc:Bounds x="715" y="194" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

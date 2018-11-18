@@ -79,13 +79,6 @@ Ein End-Listener ruft die JavaDelegate-Klasse 'GetMunicipalityListDelegate' auf 
     <bpmn:sequenceFlow id="KorrekturGewuenscht" name="ja" sourceRef="ExclusiveGateway_02eif3q" targetRef="ExclusiveGateway_1nsjb6v">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${revisionDesired}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:task id="MitumziehendePersonenAuswaehlen" name="Mitumziehende Personen auswählen">
-      <bpmn:documentation>Aus der Liste von Personen im gleichen Haushalt (personList) wird für jede Person (ausser dem Meldepflichtigen) eine Checkbox und die Vornamen der Person angezeigt.
-
-Diejenigen Personen, welche vom Meldepflichtigen nicht angehakt wurden, werden vor dem Senden des Formulars aus personList entfernt.</bpmn:documentation>
-      <bpmn:incoming>MitzuziehendePersonenVorhanden</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_125p6va</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0620p1a">
       <bpmn:incoming>NichtFuerEumzugBerechtigt</bpmn:incoming>
       <bpmn:incoming>KorrekturNichtGewuenscht</bpmn:incoming>
@@ -205,6 +198,13 @@ Und schliesslich soll die Frage gestellt werden, ob er die Personalien überarbe
 xyz soll durch den Namen der Wegzugsgemeinde ersetzt sein.</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_0d6anna</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1jlptqu</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="MitumziehendePersonenAuswaehlen" name="Mitumziehende Personen auswählen" camunda:assignee="${meldePflichtiger}">
+      <bpmn:documentation>Aus der Liste von Personen im gleichen Haushalt (personList) wird für jede Person (ausser dem Meldepflichtigen) eine Checkbox und die Vornamen der Person angezeigt.
+
+Diejenigen Personen, welche vom Meldepflichtigen nicht angehakt wurden, werden vor dem Senden des Formulars aus personList entfernt.</bpmn:documentation>
+      <bpmn:incoming>MitzuziehendePersonenVorhanden</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_125p6va</bpmn:outgoing>
     </bpmn:userTask>
   </bpmn:process>
   <bpmn:error id="Error_0j8yidj" name="ErrorPersonErfassenUndIdentifizieren" errorCode="WegenNegativerPersonenIdentifikationAbgebrochen" />
@@ -371,9 +371,6 @@ xyz soll durch den Namen der Wegzugsgemeinde ersetzt sein.</bpmn:documentation>
           <dc:Bounds x="621" y="72" width="64" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1azru2t_di" bpmnElement="MitumziehendePersonenAuswaehlen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
-        <dc:Bounds x="964" y="224" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1jhwry3_di" bpmnElement="PersonIdentifizieren" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
         <dc:Bounds x="546" y="224" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -413,6 +410,9 @@ xyz soll durch den Namen der Wegzugsgemeinde ersetzt sein.</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1us92st_di" bpmnElement="AnSchalterVerwiesenWerden" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="1368" y="379" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0z6m402_di" bpmnElement="MitumziehendePersonenAuswaehlen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+        <dc:Bounds x="964" y="224" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -60,32 +60,6 @@ Diese Variable wird benötigt, um zu steuern, ob nach dem Erfassen der Versicher
         <bpmn:outgoing>SequenceFlow_0unz7dw</bpmn:outgoing>
         <bpmn:outgoing>SequenceFlow_104azdr</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:task id="VersicherungsKartennummernErfassen" name="Versicherungs-Kartennummern erfassen">
-        <bpmn:documentation>Folgenden Warning-Alert anzeigen, falls die Antwort des VeKa-Center-Auskunftsdienstes (checkBaseInsuranceResult) 'No' oder 'Unknown' ist.
-"Die Grundversicherungspflicht für diese Person konnte nicht erfolgreich geprüft werden. Details:   
-
-{{person.checkBaseInsuranceResultDetails}}       
-
-Prüfen Sie bitte nochmals, ob Sie die Nummer richtig erfasst haben.        
-
-Falls Sie korrekt ist, können Sie dieses Formular ohne Änderung erneut absenden. Der Prozess kann dennoch fortgesetzt werden, aber vermutlich müssen Sie auf der Zuzugsgemeinde persönlich vorbei gehen mit Ihrer Versichertenkarte        
-
-Falls Sie die Nummer falsch erfasst haben, geben Sie nun die korrekte Nummer ein und die Prüfung erfolgt dann erneut.
-
-
-Formularfeld:
-- label: Versichertenkartennummer für VORNAME NACHNAME*
-- typ number
-- Wert: baseInsuranceNumber
-- Pflicht-Attribut
-
-Skripte:
-- Nach dem Formular-Laden sollen die Variablen checkBaseInsurance, personList und loopCounter ausgelesen werden
-- Nach dem Auslesen soll die aktuelle Person (gemäss loopCounter) $scope.person zugewiesen werden. Zudem sind die Variablen $scope.baseInsuranceNumberOriginal und $scope.baseInsuranceNumber entsprechend aus $scope.person.baseInsuranceNumber auszulesen
-- Vor dem Absenden des Formulars ist zu prüfen, ob der Benutzer die baseInsuranceNumber geändert hat. Falls checkBaseInsurance falsch ist und der Benutzer etwas geändert hat, ist checkBaseInsurance auf Wahr zu setzen.</bpmn:documentation>
-        <bpmn:incoming>SequenceFlow_14qf1vf</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_13c4q3d</bpmn:outgoing>
-      </bpmn:task>
       <bpmn:task id="GrundversicherungPruefen" name="Grund-versicherung prüfen">
         <bpmn:documentation>Grundversicherungsprüfung pro umziehender Person im Auskunftsdienst des VeKa-Centers
 
@@ -127,6 +101,32 @@ In einem End Listener wird die Variable checkBaseInsurance auf false gesetzt. Be
         <bpmn:incoming>SequenceFlow_1r2heig</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="SequenceFlow_1r2heig" sourceRef="ExclusiveGateway_1k9fmii" targetRef="EndEvent_13l92vz" />
+      <bpmn:userTask id="VersicherungsKartennummernErfassen" name="Versicherungs-Kartennummern erfassen" camunda:assignee="${meldePflichtiger}">
+        <bpmn:documentation>Folgenden Warning-Alert anzeigen, falls die Antwort des VeKa-Center-Auskunftsdienstes (checkBaseInsuranceResult) 'No' oder 'Unknown' ist.
+"Die Grundversicherungspflicht für diese Person konnte nicht erfolgreich geprüft werden. Details:   
+
+{{person.checkBaseInsuranceResultDetails}}       
+
+Prüfen Sie bitte nochmals, ob Sie die Nummer richtig erfasst haben.        
+
+Falls Sie korrekt ist, können Sie dieses Formular ohne Änderung erneut absenden. Der Prozess kann dennoch fortgesetzt werden, aber vermutlich müssen Sie auf der Zuzugsgemeinde persönlich vorbei gehen mit Ihrer Versichertenkarte        
+
+Falls Sie die Nummer falsch erfasst haben, geben Sie nun die korrekte Nummer ein und die Prüfung erfolgt dann erneut.
+
+
+Formularfeld:
+- label: Versichertenkartennummer für VORNAME NACHNAME*
+- typ number
+- Wert: baseInsuranceNumber
+- Pflicht-Attribut
+
+Skripte:
+- Nach dem Formular-Laden sollen die Variablen checkBaseInsurance, personList und loopCounter ausgelesen werden
+- Nach dem Auslesen soll die aktuelle Person (gemäss loopCounter) $scope.person zugewiesen werden. Zudem sind die Variablen $scope.baseInsuranceNumberOriginal und $scope.baseInsuranceNumber entsprechend aus $scope.person.baseInsuranceNumber auszulesen
+- Vor dem Absenden des Formulars ist zu prüfen, ob der Benutzer die baseInsuranceNumber geändert hat. Falls checkBaseInsurance falsch ist und der Benutzer etwas geändert hat, ist checkBaseInsurance auf Wahr zu setzen.</bpmn:documentation>
+        <bpmn:incoming>SequenceFlow_14qf1vf</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_13c4q3d</bpmn:outgoing>
+      </bpmn:userTask>
     </bpmn:subProcess>
     <bpmn:endEvent id="WeitereAngabenErfolgreichErfasst" name="Weitere Angaben erfolgreich erfasst">
       <bpmn:incoming>SequenceFlow_1hy3e56</bpmn:incoming>
@@ -139,20 +139,6 @@ In einem End Listener wird die Variable checkBaseInsurance auf false gesetzt. Be
     <bpmn:sequenceFlow id="SequenceFlow_1hy3e56" sourceRef="KontaktangabenErfassen" targetRef="WeitereAngabenErfolgreichErfasst" />
     <bpmn:sequenceFlow id="SequenceFlow_1pmjdyn" sourceRef="ExclusiveGateway_0hwy0a5" targetRef="KontaktangabenErfassen" />
     <bpmn:sequenceFlow id="SequenceFlow_0431ehk" sourceRef="GrundversicherungFuerAllePersonenPruefen" targetRef="ExclusiveGateway_0hwy0a5" />
-    <bpmn:task id="UmzugsdatenErfassen" name="Umzugsdaten erfassen">
-      <bpmn:documentation>Wegzugsdatum
-  eCH-0194:departureDate
-  Date
-  input text (ISO-DateTime-Format, Pflicht)
-  Auswahl des Datums über Bootstrap-Datepicker ermöglichen
-Zuzugsdatum
-  eCH-0194:arrivalDate
-  Date
-  input text (ISO-DateTime-Format, Optional)
-  Auswahl des Datums über Bootstrap-Datepicker ermöglichen; Das Zuzugsdatum soll nur auswählbar sein, wenn der Benutzer eine Checkbox "Abweichendes Zuzugsdatum" anhakt</bpmn:documentation>
-      <bpmn:incoming>SequenceFlow_1j0inpb</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_04fd0dv</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:startEvent id="ZuzugsInformationenErfolgreichGeprueft" name="Zuzugs-Informationen erfolgreich geprüft">
       <bpmn:documentation>Dieses Prozesstartereignis wird aufgerufen vom Prozess 'Umzugsmeldung erfassen und bezahlen' und ist nicht gedacht, um unabhängig davon (z.B. aus der Tasklist) aufgerufen zu werden.</bpmn:documentation>
       <bpmn:outgoing>SequenceFlow_1j0inpb</bpmn:outgoing>
@@ -208,6 +194,20 @@ E-Mailadresse
   input email (Pflicht)</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_1pmjdyn</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1hy3e56</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UmzugsdatenErfassen" name="Umzugsdaten erfassen" camunda:formKey="embedded:app:forms/UmzugsdatenErfassenForm.html" camunda:assignee="${meldePflichtiger}">
+      <bpmn:documentation>Wegzugsdatum
+  eCH-0194:departureDate
+  Date
+  input text (ISO-DateTime-Format, Pflicht)
+  Auswahl des Datums über Bootstrap-Datepicker ermöglichen
+Zuzugsdatum
+  eCH-0194:arrivalDate
+  Date
+  input text (ISO-DateTime-Format, Optional)
+  Auswahl des Datums über Bootstrap-Datepicker ermöglichen; Das Zuzugsdatum soll nur auswählbar sein, wenn der Benutzer eine Checkbox "Abweichendes Zuzugsdatum" anhakt</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_1j0inpb</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_04fd0dv</bpmn:outgoing>
     </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -351,12 +351,6 @@ E-Mailadresse
           <dc:Bounds x="458" y="150" width="35" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_09ibpuj_di" bpmnElement="UmzugsdatenErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
-        <dc:Bounds x="153" y="81" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0owxwe5_di" bpmnElement="VersicherungsKartennummernErfassen" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
-        <dc:Bounds x="732" y="76" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_16zaspe_di" bpmnElement="GrundversicherungPruefen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="965" y="76" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -386,6 +380,12 @@ E-Mailadresse
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_13fd62b_di" bpmnElement="KontaktangabenErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="1494" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1d0fhcm_di" bpmnElement="VersicherungsKartennummernErfassen" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
+        <dc:Bounds x="732" y="76" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0715tsx_di" bpmnElement="UmzugsdatenErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+        <dc:Bounds x="153" y="81" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

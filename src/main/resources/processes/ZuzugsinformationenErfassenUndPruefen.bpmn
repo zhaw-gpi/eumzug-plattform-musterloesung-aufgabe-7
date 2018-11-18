@@ -64,14 +64,6 @@ execution.setVariable("adresseUngueltigZaehler", adresseUngueltigZaehler + 1);</
       <bpmn:incoming>SequenceFlow_0sag684</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0sag684" sourceRef="WohnungAnZuzugsadresseAuswaehlen" targetRef="ZuzugsInformationenErfolgreichGeprueft" />
-    <bpmn:task id="WohnungAnZuzugsadresseAuswaehlen" name="Wohnung an Zuzugsadresse auswählen">
-      <bpmn:documentation>Wohnung
-  eCH-0010:apartmentMoveIn
-  String
-  select (basierend auf wohnungenList, wobei whgnr angezeigt wird)</bpmn:documentation>
-      <bpmn:incoming>MindestensEineWohnungGefunden</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0sag684</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:task id="WohnungenAnZuzugsadresseBestimmen" name="Wohnungen an Zuzugsadresse bestimmen">
       <bpmn:documentation>Überprüfen, ob für die angegebene Zuzugsadresse Wohnungen im GWR vorhanden sind
 
@@ -115,6 +107,14 @@ Die Variable adresseUngueltigZaehler wird dabei im ausgehenden Sequenzfluss nach
 Bitte korrigieren Sie entweder Ihre Eingaben im nächsten Formular oder melden Sie sich bei Ihrer Zuzugsgemeinde [Name der politischen Gemeinde] am Schalter, wenn Sie der Meinung sind, eigentlich die korrekte Adresse erfasst zu haben. In diesem Fall können Sie einfach diese Webseite schliessen, denn Ihre elektronische Umzugsmeldung wird automatisch nach 48 Stunden archiviert."</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_0fooiee</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1n0ru7f</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="WohnungAnZuzugsadresseAuswaehlen" name="Wohnung an Zuzugsadresse auswählen" camunda:formKey="embedded:app:forms/WohnungAnZuzugsadresseAuswaehlenForm.html" camunda:assignee="${meldePflichtiger}">
+      <bpmn:documentation>Wohnung
+  eCH-0010:apartmentMoveIn
+  String
+  select (basierend auf wohnungenList, wobei whgnr angezeigt wird)</bpmn:documentation>
+      <bpmn:incoming>MindestensEineWohnungGefunden</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0sag684</bpmn:outgoing>
     </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -196,14 +196,14 @@ Bitte korrigieren Sie entweder Ihre Eingaben im nächsten Formular oder melden S
         <di:waypoint x="804" y="252" />
         <di:waypoint x="854" y="252" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1i0j8hy_di" bpmnElement="WohnungAnZuzugsadresseAuswaehlen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
-        <dc:Bounds x="704" y="212" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1ayw0q9_di" bpmnElement="WohnungenAnZuzugsadresseBestimmen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="432" y="212" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1fx6kgf_di" bpmnElement="ZuzugsadresseErfassen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="272" y="212" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0istclv_di" bpmnElement="WohnungAnZuzugsadresseAuswaehlen" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+        <dc:Bounds x="704" y="212" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
