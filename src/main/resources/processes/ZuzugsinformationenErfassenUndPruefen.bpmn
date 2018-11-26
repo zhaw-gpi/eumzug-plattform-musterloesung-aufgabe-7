@@ -27,6 +27,7 @@ Ein End-Listener ruft die JavaDelegate-Klasse 'GetMunicipalityListDelegate' auf 
           <camunda:script scriptFormat="JavaScript">// Variable adresseUngueltigZaehler mit dem Wert 0 initiieren
 execution.setVariable("adresseUngueltigZaehler", 0);</camunda:script>
         </camunda:executionListener>
+        <camunda:executionListener delegateExpression="#{getMunicipalityListAdapter}" event="start" />
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_0gby9vq</bpmn:outgoing>
     </bpmn:startEvent>
