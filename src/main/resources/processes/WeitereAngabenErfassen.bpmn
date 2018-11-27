@@ -101,7 +101,7 @@ In einem End Listener wird die Variable checkBaseInsurance auf false gesetzt. Be
         <bpmn:incoming>SequenceFlow_1r2heig</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="SequenceFlow_1r2heig" sourceRef="ExclusiveGateway_1k9fmii" targetRef="EndEvent_13l92vz" />
-      <bpmn:userTask id="VersicherungsKartennummernErfassen" name="Versicherungs-Kartennummern erfassen" camunda:assignee="${meldePflichtiger}">
+      <bpmn:userTask id="VersicherungsKartennummernErfassen" name="Versicherungs-Kartennummern erfassen" camunda:formKey="embedded:app:forms/VersicherungsKartennummernErfassen.html" camunda:assignee="${meldePflichtiger}">
         <bpmn:documentation>Folgenden Warning-Alert anzeigen, falls die Antwort des VeKa-Center-Auskunftsdienstes (checkBaseInsuranceResult) 'No' oder 'Unknown' ist.
 "Die Grundversicherungspflicht für diese Person konnte nicht erfolgreich geprüft werden. Details:   
 

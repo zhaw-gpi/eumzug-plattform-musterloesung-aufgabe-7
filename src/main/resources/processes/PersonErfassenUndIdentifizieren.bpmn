@@ -199,7 +199,7 @@ xyz soll durch den Namen der Wegzugsgemeinde ersetzt sein.</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_0d6anna</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1jlptqu</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="MitumziehendePersonenAuswaehlen" name="Mitumziehende Personen auswählen" camunda:assignee="${meldePflichtiger}">
+    <bpmn:userTask id="MitumziehendePersonenAuswaehlen" name="Mitumziehende Personen auswählen" camunda:formKey="embedded:app:forms/MitumziehendePersonenAuswaehlenForm.html" camunda:assignee="${meldePflichtiger}">
       <bpmn:documentation>Aus der Liste von Personen im gleichen Haushalt (personList) wird für jede Person (ausser dem Meldepflichtigen) eine Checkbox und die Vornamen der Person angezeigt.
 
 Diejenigen Personen, welche vom Meldepflichtigen nicht angehakt wurden, werden vor dem Senden des Formulars aus personList entfernt.</bpmn:documentation>
