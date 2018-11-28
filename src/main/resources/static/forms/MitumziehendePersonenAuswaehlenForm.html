@@ -16,7 +16,6 @@ Formular zum UserTask "Mitumziehende Personen wählen"
     </div>
 
     <script cam-script type="text/from-script">
-        debugger;
         // AngularJS-Scope-Variable camForm.variableManager wird lokalen Variable zugewiesen
         var variableManager = camForm.variableManager;
 
@@ -34,6 +33,7 @@ Formular zum UserTask "Mitumziehende Personen wählen"
             
             // ... Model-Variable für selektierte Personen initiieren (zunächst leeres Array)
             $scope.checkedPersons = [];
+            debugger;
         });
         
         // Listener-Methode, wenn eine Checkbox zu einer Person an- oder abgewählt wurde mit Übergabe der ausgewählten Person
@@ -44,7 +44,7 @@ Formular zum UserTask "Mitumziehende Personen wählen"
                 $scope.checkedPersons.push(person);
             } else {
                 // ansonsten diese aus dem Array entfernen über ihren Index
-                $scope.checkedPersons.splice($scope.checkboxPersons.indexOf(person), 1);
+                $scope.checkedPersons.splice($scope.checkedPersons.indexOf(person), 1);
             }
         }
 
