@@ -178,7 +178,14 @@ Vorbedingungen: Personenregister, GWR und Umzugsplattform müssen auf localhost 
 	       "municipalityIdMoveIn": {"value": "311", "type": "Integer"},
 	       "departureDate": {"value": "2017-01-01T00:00:00.000+0100", "type": "Date"},
 	       "arrivalDate": {"value": "2017-01-02T00:00:00.000+0100", "type": "Date"},
-	       "apartmentIdMoveIn": {"value":"223123456789","type":"String"},
+	       "apartmentMoveIn": {
+	       	"value": "{\"whgnr\":\"223123456789\",\"wstwk\":3100,\"wmehrg\":2,\"wbez\":\"Süd\",\"wazim\":4}",
+	       	"type": "Object",
+	       	"valueInfo": {
+	    			"objectTypeName": "ch.zhaw.gpi.eumzugplattform.processdata.WohnungType",
+	    			"serializationDataFormat": "application/json"
+	 		}
+		},
 	       "phoneNumber": {"value": "0980987766", "type": "String"},
 	       "emailAddress": {"value": "hans.meier@privat.ch", "type": "String"},
 	       "housingSituationType": {"value": "2", "type": "String"},
@@ -194,6 +201,7 @@ Vorbedingungen: Personenregister, GWR und Umzugsplattform müssen auf localhost 
 	    			"serializationDataFormat": "application/json"
 	 		}
 		},
+	     "feesTotal": {"value": "20", "type": "Integer"},
 		"feeMap": {
 			"value": "{\"Zuzugsgebühr Schüpfen\":10,\"Wegzugsgebühr Lohnstorf\":10}",
 			"type": "Object",
